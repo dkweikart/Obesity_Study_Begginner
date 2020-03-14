@@ -1,0 +1,22 @@
+####Upload ggplot2 and plyr####
+library(ggplot2)
+library(plyr)
+
+####assign male txt file to obstudy male####
+obstudymale <- read.csv(file.choose(), header=T)
+
+####standard deviation of colon length####
+sd <- sd(obstudymale$Colon)
+
+####barplot with errorbars and titles####
+g<- ggplot(data=obstudymale, aes(x=Treatment, y=Colon))
+b <- geom_bar(stat="summary", fun.y="mean", position="dodge", 
+              aes(color=Treatment, fill=Treatment))
+g+b
+
+a <- geom_linerange(aes(x=Treatment, ymin=Colon-sd, ymax=Colon+sd))
+title <- ggtitle("Colon Length of Males Between Treatments")
+ylab <- ylab("Colon Length (cm)")
+
+
+g+b+a+title+ylab
