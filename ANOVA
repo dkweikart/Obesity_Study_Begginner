@@ -1,0 +1,218 @@
+###Load packages###
+library(dplyr)
+library(ggpubr)
+library(agricolae)
+
+####Colon Length####
+###Assign Data to Object####
+malcolon <- read.csv(file.choose(), header = TRUE)
+femcolon <- read.csv(file.choose(),header = TRUE)
+
+###Summary###
+group_by(malcolon, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(Length, na.rm = TRUE),
+    sd = sd(Length, na.rm = TRUE)
+  )
+
+group_by(femcolon, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(Length, na.rm = TRUE),
+    sd = sd(Length, na.rm = TRUE)
+  )
+
+###Visualize data###
+boxplot(Length ~ Treatment, data = malcolon,
+       xlab = "Treatment", ylab = "Length",
+       frame = FALSE)
+
+boxplot(Length ~ Treatment, data = femcolon,
+        xlab = "Treatment", ylab = "Length",
+        frame = FALSE)
+
+###Compute ANOVA###
+malcolon.aov <- aov(Length ~ Treatment, data = malcolon)
+# Summary of the analysis#
+summary(malcolon.aov)
+
+femcolon.aov <- aov(Length ~ Treatment, data = femcolon)
+# Summary of the analysis#
+summary(femcolon.aov)
+
+
+####Tukey Post Hoc Test####
+TukeyHSD(malcolon.aov)
+TukeyHSD(femcolon.aov)
+
+#Group based on significance#
+HSD.test(malcolon.aov, "Treatment", console=TRUE)
+HSD.test(femcolon.aov, "Treatment", console=TRUE)
+
+####Gut Permeability####
+###Assign Data to Object####
+malperm <- read.csv(file.choose(), header = TRUE)
+femperm <- read.csv(file.choose(),header = TRUE)
+
+###Summary###
+group_by(malperm, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(Fluorescence, na.rm = TRUE),
+    sd = sd(Fluorescence, na.rm = TRUE)
+  )
+
+group_by(femperm, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(Fluorescence, na.rm = TRUE),
+    sd = sd(Fluorescence, na.rm = TRUE)
+  )
+
+###Visualize data###
+boxplot(Fluorescence ~ Treatment, data = malperm,
+        xlab = "Treatment", ylab = "Length",
+        frame = FALSE)
+
+boxplot(Fluorescence ~ Treatment, data = femperm,
+        xlab = "Treatment", ylab = "Length",
+        frame = FALSE)
+
+###Compute ANOVA###
+malperm.aov <- aov(Fluorescence ~ Treatment, data = malperm)
+# Summary of the analysis#
+summary(malperm.aov)
+
+femperm.aov <- aov(Fluorescence ~ Treatment, data = femperm)
+# Summary of the analysis#
+summary(femperm.aov)
+
+
+####Tukey Post Hoc Test####
+TukeyHSD(malperm.aov)
+TukeyHSD(femperm.aov)
+
+#Group Based on Significance#
+HSD.test(malperm.aov, "Treatment", console=TRUE)
+HSD.test(femperm.aov, "Treatment", console=TRUE)
+
+####Inflammation Markers####
+###Assign Data to Object####
+malinflam <- read.csv(file.choose(), header = TRUE)
+feminflam <- read.csv(file.choose(),header = TRUE)
+
+###Summary###
+group_by(malinflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(IL6, na.rm = TRUE),
+    sd = sd(IL6, na.rm = TRUE)
+  )
+
+group_by(feminflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(IL6, na.rm = TRUE),
+    sd = sd(IL6, na.rm = TRUE)
+  )
+
+group_by(malinflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(IL10, na.rm = TRUE),
+    sd = sd(IL10, na.rm = TRUE)
+  )
+
+group_by(feminflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(IL10, na.rm = TRUE),
+    sd = sd(IL10, na.rm = TRUE)
+  )
+
+group_by(malinflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(TNF, na.rm = TRUE),
+    sd = sd(TNF, na.rm = TRUE)
+  )
+
+group_by(feminflam, Treatment) %>%
+  summarise(
+    count = n(),
+    mean = mean(TNF, na.rm = TRUE),
+    sd = sd(TNF, na.rm = TRUE)
+  )
+###Visualize data###
+boxplot(IL6 ~ Treatment, data = malinflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+boxplot(IL6 ~ Treatment, data = feminflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+boxplot(IL10 ~ Treatment, data = malinflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+boxplot(IL10 ~ Treatment, data = feminflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+boxplot(TNF ~ Treatment, data = malinflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+boxplot(TNF ~ Treatment, data = feminflam,
+        xlab = "Treatment", ylab = "Abundance",
+        frame = FALSE)
+
+###Compute ANOVA###
+malIL6.aov <- aov(IL6 ~ Treatment, data = malinflam)
+# Summary of the analysis#
+summary(malIL6.aov)
+
+femIL6.aov <- aov(IL6 ~ Treatment, data = feminflam)
+# Summary of the analysis#
+summary(femIL6.aov)
+
+malIL10.aov <- aov(IL10 ~ Treatment, data = malinflam)
+# Summary of the analysis#
+summary(malIL10.aov)
+
+femIL10.aov <- aov(IL10 ~ Treatment, data = feminflam)
+# Summary of the analysis#
+summary(femIL10.aov)
+
+malTNF.aov <- aov(TNF ~ Treatment, data = malinflam)
+# Summary of the analysis#
+summary(malTNF.aov)
+
+femTNF.aov <- aov(TNF ~ Treatment, data = feminflam)
+# Summary of the analysis#
+summary(femTNF.aov)
+
+####Tukey Post Hoc Test####
+TukeyHSD(malcolon.aov)
+TukeyHSD(femcolon.aov)
+
+TukeyHSD(malperm.aov)
+TukeyHSD(femperm.aov)
+
+TukeyHSD(malIL6.aov)
+TukeyHSD(malIL10.aov)
+TukeyHSD(malTNF.aov)
+TukeyHSD(femIL6.aov)
+TukeyHSD(femIL10.aov)
+TukeyHSD(femTNF.aov)
+
+HSD.test(malIL6.aov, "Treatment", console=TRUE)
+HSD.test(femIL6.aov, "Treatment", console=TRUE)
+
+HSD.test(malIL10.aov, "Treatment", console=TRUE)
+HSD.test(femIL10.aov, "Treatment", console=TRUE)
+
+HSD.test(malTNF.aov, "Treatment", console=TRUE)
+HSD.test(femTNF.aov, "Treatment", console=TRUE)
